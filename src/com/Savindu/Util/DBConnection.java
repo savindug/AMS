@@ -8,7 +8,6 @@ package com.Savindu.Util;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import view.AppInterface;
 
 /**
  *
@@ -22,7 +21,7 @@ public class DBConnection {
 	
 	private static final String USERNAME = "sa";
 	
-	private static final String PASSWORD = "check123";
+	private static final String PASSWORD = "12345";
 	
 	public static Connection connection = null;
 	

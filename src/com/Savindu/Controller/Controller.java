@@ -71,9 +71,10 @@ public class Controller {
        Attendance att;
         ArrayList<Attendance> attL = new ArrayList<>();
         
-        String sql = "  select u.PIN, u.UserName, a.Clock, at.ItemName, a.Remark from \n" +
+        String sql = "select u.pin as Employee_ID, u.UserName as User_Name, Min(a.clock) as Clock_In, Max(a.clock) as Clock_out, at.ItemName as Attend_Type , a.Remark from \n" +
 "                    ras_AttRecord a, ras_Dept d, ras_Users u, ras_AttTypeItem at\n" +
-"                     where  u.UID = a.ID and a.AttTypeId = at.ItemId";
+"                    where  u.UID = a.ID and a.AttTypeId = at.ItemId\n" +
+"					GROUP BY CAST(clock AS DATE), u.pin, u.UserName, at.ItemName, a.Remark";
                      //"  order by usr.PIN";
 //                     
                      //String sql = "select * from ras_AttRecord group by pin";
@@ -87,9 +88,10 @@ public class Controller {
                     att = new Attendance();
                     att.setuId(rs.getString(1));
                     att.setuName(rs.getString(2));
-                   
                     att.setAttTime(rs.getString(3));
-                    att.setRemark(rs.getString(4));
+                    att.setClockOut(rs.getString(4));
+                    att.setVerifyMode(rs.getString(5));
+                    att.setRemark(rs.getString(6));
                     attL.add(att);
                     //System.out.println(user.getuID()+"\t\t"+user.getuName()+"\t\t"+user.getGender()+"\t\t"+user.getCreateDate()+"\t\t"+user.getLastLoggedIn());
 
@@ -189,10 +191,10 @@ public class Controller {
          Attendance ot;
         ArrayList<Attendance> otL = new ArrayList<>();
         
-        String sql ="SELECT att.din, usr.UserName , MAX(clock) as Clock_In, MIN(clock) as Clock_out, DATEDIFF(HOUR, MIN(clock), MAX(clock)) AS Othours, CAST(clock AS DATE) as DateField\n" +
-                    "FROM ras_AttRecord att, ras_Users usr\n" +
-                    "where usr.din = att.din \n" +
-                    "GROUP BY CAST(clock AS DATE), att.din, usr.UserName";
+        String sql ="SELECT usr.pin as Employee_ID, usr.UserName as User_Name, Min(clock) as Clock_In, Max(clock) as Clock_out, DATEDIFF(HOUR, MIN(clock), MAX(clock)) AS OT_Hours, CAST(clock AS DATE) as Date_Field\n" +
+"                    FROM ras_AttRecord att, ras_Users usr\n" +
+"                    where usr.din = att.din \n" +
+"                    GROUP BY CAST(clock AS DATE), usr.pin, usr.UserName";
         
             
             try{
