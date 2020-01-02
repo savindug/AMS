@@ -183,7 +183,7 @@ public class empservice {
         
         try {           
             
-            ps = con.prepareStatement("Select a.userId, a.UserName, a.branchName, e.deptName, a.clock, a.remarks from \n"
+            ps = con.prepareStatement("Select DISTINCT a.userId, a.UserName, a.branchName, e.deptName, a.clock, a.remarks from \n"
                     + "Employees e, Attendance a \n"
                     + "where a.userId = e.userId and a.branchname = ? and a.clock like ? \n"
                     + "Order by a.clock");
@@ -208,7 +208,7 @@ public class empservice {
         
         try {           
             
-            ps = con.prepareStatement("Select l.userId, l.UserName, l.branchName, e.deptName, l.submittedDate, l.fromDtae ,l.toDate ,l.remarks \n"
+            ps = con.prepareStatement("Select DISTINCT l.userId, l.UserName, l.branchName, e.deptName, l.submittedDate, l.fromDtae ,l.toDate ,l.remarks \n"
                     + " from Employees e, Leaves l\n"
                     + "where l.userId = e.userId and l.branchname = ? and l.submittedDate like ? \n"
                     + "Order by l.submittedDate");
@@ -234,7 +234,7 @@ public class empservice {
         
         try {           
             
-            ps = con.prepareStatement("Select o.userId, o.UserName, o.branchName, e.deptName, o.date, o.clockIn, o.clockOut ,o.otHours \n"
+            ps = con.prepareStatement("Select DISTINCT o.userId, o.UserName, o.branchName, e.deptName, o.date, o.clockIn, o.clockOut ,o.otHours \n"
                     + " from Employees e, otTable o\n"
                     + "where o.userId = e.userId and o.branchname = ? and o.date like ? \n"
                     + "Order by o.date");
@@ -251,7 +251,120 @@ public class empservice {
          
      }
      
+     public ResultSet viewfield(empmodel em){
+         
+        con = DBConnect.connect();
+       
+        ResultSet rs = null;
+        
+        try {           
+            
+            ps = con.prepareStatement("Select *  \n"
+                    + " from FieldOfficers \n"
+                    + "where  branch like ?");
+                   
+           
+           ps.setString(1, em.getSearchbranchname());
+            rs = ps.executeQuery();
+            
+           
+        } catch (SQLException ex) {
+            Logger.getLogger(empservice.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+        return rs;
+         
+     }
      
+     public int maxemp(String Branchname){
+         
+        con = DBConnect.connect();
+        ResultSet rs = null;
+        int nxtsql = 0;
+            try {
+            ps = con.prepareStatement("SELECT max(userId) from Employees where branchName = ? ");
+            ps.setString(1,Branchname);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                nxtsql = rs.getInt(1);
+               
+              
+            }
+            }catch(Exception e){                
+                    
+            } 
+      
+        return nxtsql;
+         
+     }
+     
+     public String maxa(String Branchname){
+         
+        con = DBConnect.connect();
+        ResultSet rs = null;
+        String nxtsql = "0000-00-00 00:00:00";
+            try {
+            ps = con.prepareStatement("SELECT max(clock) from Attendance where branchName = ? ");
+            ps.setString(1,Branchname);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                nxtsql = rs.getString(1);
+               
+              
+            }
+            }catch(Exception e){                
+                    
+            } 
+      
+        return nxtsql;
+         
+     }
+     /*    */
+      public String maxl(String Branchname){
+         
+        con = DBConnect.connect();
+        ResultSet rs = null;
+        String nxtsql = "0000-00-00 00:00:00";
+            try {
+            ps = con.prepareStatement("SELECT max(submittedDate) from Leaves where branchName = ? ");
+            ps.setString(1,Branchname);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                nxtsql = rs.getString(1);
+               
+              
+            }
+            }catch(Exception e){                
+                    
+            } 
+      
+        return nxtsql;
+         
+     }
+     
+      
+       public String maxo(String Branchname){
+         
+        con = DBConnect.connect();
+        ResultSet rs = null;
+        String nxtsql = "0000-00-00 00:00:00";
+            try {
+            ps = con.prepareStatement("SELECT max(clockIn) from Leaves where branchName = ? ");
+            ps.setString(1,Branchname);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                nxtsql = rs.getString(1);
+               
+              
+            }
+            }catch(Exception e){                
+                    
+            } 
+      
+        return nxtsql;
+         
+     }
+      
      
      public ResultSet getemployees(){
         Connection connection = null;

@@ -2561,9 +2561,23 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="676" max="32767" attributes="0"/>
+                      <EmptySpace pref="570" max="32767" attributes="0"/>
                       <Component id="jLabel34" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="632" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="271" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jScrollPane7" min="-2" pref="906" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="jLabel33" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="fieldbranch" min="-2" pref="589" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="searchfield" min="-2" pref="181" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -2572,7 +2586,15 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
                       <Component id="jLabel34" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="845" max="32767" attributes="0"/>
+                      <EmptySpace min="33" pref="33" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jLabel33" max="32767" attributes="0"/>
+                          <Component id="searchfield" alignment="0" pref="46" max="32767" attributes="0"/>
+                          <Component id="fieldbranch" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                      <Component id="jScrollPane7" min="-2" pref="441" max="-2" attributes="0"/>
+                      <EmptySpace pref="279" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -2585,6 +2607,93 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Field Officer Programmes"/>
               </Properties>
+            </Component>
+            <Container class="javax.swing.JScrollPane" name="jScrollPane7">
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JTable" name="fieldtable">
+                  <Properties>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                      <Table columnCount="4" rowCount="4">
+                        <Column editable="true" title="Title 1" type="java.lang.Object"/>
+                        <Column editable="true" title="Title 2" type="java.lang.Object"/>
+                        <Column editable="true" title="Title 3" type="java.lang.Object"/>
+                        <Column editable="true" title="Title 4" type="java.lang.Object"/>
+                      </Table>
+                    </Property>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Component class="javax.swing.JLabel" name="jLabel33">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="24" style="0"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Branch"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="searchfield">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="24" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Search"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchfieldActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="fieldbranch">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="24" style="0"/>
+                </Property>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="33">
+                    <StringItem index="0" value="Ahangama"/>
+                    <StringItem index="1" value="Ahungalla"/>
+                    <StringItem index="2" value="Aluthwala"/>
+                    <StringItem index="3" value="Ambalangoda"/>
+                    <StringItem index="4" value="Ambana"/>
+                    <StringItem index="5" value="Baddegama"/>
+                    <StringItem index="6" value="Batapola"/>
+                    <StringItem index="7" value="Elpitiya"/>
+                    <StringItem index="8" value="Ethkandura"/>
+                    <StringItem index="9" value="Gonadeniya_Udugama"/>
+                    <StringItem index="10" value="Gonagala_Gonagalapura"/>
+                    <StringItem index="11" value="Karandeniya"/>
+                    <StringItem index="12" value="Keradewala"/>
+                    <StringItem index="13" value="Kodagoda_Imaduwa"/>
+                    <StringItem index="14" value="Koggala"/>
+                    <StringItem index="15" value="Labuduwa"/>
+                    <StringItem index="16" value="Nagoda_Ethumale"/>
+                    <StringItem index="17" value="Neluwa"/>
+                    <StringItem index="18" value="Niyagama"/>
+                    <StringItem index="19" value="Opatha"/>
+                    <StringItem index="20" value="Pahalagamhaya_Miriswaththa_Benthota"/>
+                    <StringItem index="21" value="Paragoda_Imaduwa"/>
+                    <StringItem index="22" value="Pilana"/>
+                    <StringItem index="23" value="Pinkanda"/>
+                    <StringItem index="24" value="Pitigala"/>
+                    <StringItem index="25" value="Rathgama"/>
+                    <StringItem index="26" value="Thawalama"/>
+                    <StringItem index="27" value="Uragasmanhandiya"/>
+                    <StringItem index="28" value="Urala_Wanduramba"/>
+                    <StringItem index="29" value="Walahanduwa"/>
+                    <StringItem index="30" value="Wanduramba"/>
+                    <StringItem index="31" value="Weragoda"/>
+                    <StringItem index="32" value="Yakkalamulla"/>
+                  </StringArray>
+                </Property>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>

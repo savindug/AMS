@@ -65,10 +65,12 @@ public class AppInterface extends javax.swing.JFrame {
         
         JOptionPane.showMessageDialog(null, "Uploading Data to Server, Please Wait");
         ServerController ss = new ServerController();
-        ss.insertUserList(branchname);
-        ss.insertAttList(branchname);
-        ss.insertLeaveList(branchname);
-        ss.insertOTList(branchname);
+        empservice es = new empservice();
+        ss.insertUserList(branchname, es.maxemp(branchname));
+        
+        ss.insertAttList(branchname, es.maxa(branchname));
+        ss.insertLeaveList(branchname, es.maxl(branchname));
+        ss.insertOTList(branchname, es.maxo(branchname));
     }
     
     void viewPanel(String cname) {
@@ -217,6 +219,11 @@ public class AppInterface extends javax.swing.JFrame {
         btngeneratereportleavetable1 = new javax.swing.JButton();
         viewnotes = new javax.swing.JPanel();
         jLabel34 = new javax.swing.JLabel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        fieldtable = new javax.swing.JTable();
+        jLabel33 = new javax.swing.JLabel();
+        searchfield = new javax.swing.JButton();
+        fieldbranch = new javax.swing.JComboBox<>();
         addottable = new javax.swing.JPanel();
         jLabel44 = new javax.swing.JLabel();
         jScrollPane8 = new javax.swing.JScrollPane();
@@ -1502,21 +1509,66 @@ public class AppInterface extends javax.swing.JFrame {
         jLabel34.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel34.setText("Field Officer Programmes");
 
+        fieldtable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane7.setViewportView(fieldtable);
+
+        jLabel33.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel33.setText("Branch");
+
+        searchfield.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        searchfield.setText("Search");
+        searchfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchfieldActionPerformed(evt);
+            }
+        });
+
+        fieldbranch.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        fieldbranch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ahangama", "Ahungalla", "Aluthwala", "Ambalangoda", "Ambana", "Baddegama", "Batapola", "Elpitiya", "Ethkandura", "Gonadeniya_Udugama", "Gonagala_Gonagalapura", "Karandeniya", "Keradewala", "Kodagoda_Imaduwa", "Koggala", "Labuduwa", "Nagoda_Ethumale", "Neluwa", "Niyagama", "Opatha", "Pahalagamhaya_Miriswaththa_Benthota", "Paragoda_Imaduwa", "Pilana", "Pinkanda", "Pitigala", "Rathgama", "Thawalama", "Uragasmanhandiya", "Urala_Wanduramba", "Walahanduwa", "Wanduramba", "Weragoda", "Yakkalamulla" }));
+
         javax.swing.GroupLayout viewnotesLayout = new javax.swing.GroupLayout(viewnotes);
         viewnotes.setLayout(viewnotesLayout);
         viewnotesLayout.setHorizontalGroup(
             viewnotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, viewnotesLayout.createSequentialGroup()
-                .addContainerGap(676, Short.MAX_VALUE)
+                .addContainerGap(570, Short.MAX_VALUE)
                 .addComponent(jLabel34)
                 .addGap(632, 632, 632))
+            .addGroup(viewnotesLayout.createSequentialGroup()
+                .addGap(271, 271, 271)
+                .addGroup(viewnotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 906, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(viewnotesLayout.createSequentialGroup()
+                        .addComponent(jLabel33)
+                        .addGap(18, 18, 18)
+                        .addComponent(fieldbranch, javax.swing.GroupLayout.PREFERRED_SIZE, 589, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(searchfield, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         viewnotesLayout.setVerticalGroup(
             viewnotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(viewnotesLayout.createSequentialGroup()
                 .addGap(55, 55, 55)
                 .addComponent(jLabel34)
-                .addContainerGap(845, Short.MAX_VALUE))
+                .addGap(33, 33, 33)
+                .addGroup(viewnotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel33, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(searchfield, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                    .addComponent(fieldbranch))
+                .addGap(50, 50, 50)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(279, Short.MAX_VALUE))
         );
 
         jPanel3.add(viewnotes, "viewnotes");
@@ -2174,6 +2226,21 @@ public class AppInterface extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btngeneratereportleavetable1ActionPerformed
 
+    private void searchfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchfieldActionPerformed
+        // TODO add your handling code here:
+        
+        empmodel em = new empmodel();
+        em.setSearchbranchname(fieldbranch.getSelectedItem().toString());
+       
+        
+        empservice es = new empservice();
+                
+        fieldtable.setModel(DbUtils.resultSetToTableModel(es.viewfield(em)));
+        
+        
+        
+    }//GEN-LAST:event_searchfieldActionPerformed
+
     
     
     /**
@@ -2248,6 +2315,8 @@ public class AppInterface extends javax.swing.JFrame {
     private javax.swing.JButton btnviewempt;
     private javax.swing.JButton btnviewreports;
     private javax.swing.JPanel changesettingscard;
+    private javax.swing.JComboBox<String> fieldbranch;
+    private javax.swing.JTable fieldtable;
     private javax.swing.JButton jButton1;
     private com.toedter.calendar.JDateChooser jDateatt2;
     private com.toedter.calendar.JDateChooser jDatelt1;
@@ -2280,6 +2349,7 @@ public class AppInterface extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
@@ -2314,6 +2384,7 @@ public class AppInterface extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JSeparator jSeparator1;
@@ -2330,6 +2401,7 @@ public class AppInterface extends javax.swing.JFrame {
     private javax.swing.JButton mainmenuar;
     private javax.swing.JPanel mainmenucard;
     private javax.swing.JButton mainmenuvr;
+    private javax.swing.JButton searchfield;
     private javax.swing.JPasswordField settingscpw;
     private javax.swing.JTextField settingsnpw;
     private javax.swing.JTextField settingsnun;

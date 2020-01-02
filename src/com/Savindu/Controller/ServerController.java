@@ -21,9 +21,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import static jdk.nashorn.api.scripting.ScriptUtils.convert;
 
 /**
  *
@@ -32,26 +34,36 @@ import javax.swing.JOptionPane;
 public class ServerController {
     
         Connection connection = null;
-        ResultSet rs = null;
+        ResultSet rs,rs1 = null;
         Statement st = null;
+        Statement ps = null;
+        private PreparedStatement ps1;
         int result = 0;
         
    
         
-        public void insertUserList(String Branchname){
+        public void insertUserList(String Branchname, Integer nxtsql){
             /*New Modifications done by Nuwanga, Repeats will not be repeated. Branch name will also be saved. Online table modified accordingly*/
+            
+            
             ArrayList<User> uList = new ArrayList<>();
             Controller ut = new Controller();
             uList = ut.userList();
 
             String INSERT_USERS_SQL = "INSERT INTO Employees" +
-            "  (userId, UserName, Gender, deptName, branchName) VALUES " +
-            " (?, ?, ?, ?,?);";
+            "  (userId, UserName, Gender, deptName, branchName) VALUES  " +
+            " (?, ?, ?, ?,?)";
+                   
     
             try{
                 connection = ServerConnection.openConnection();
 
                  for(int i=0; i<uList.size(); i++){
+                    
+                    if( Integer.parseInt(uList.get(i).getuID()) <=nxtsql){
+                        continue;
+                    } 
+                     
                     PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL);
 
                     preparedStatement.setString(1, uList.get(i).getuID().toString());
@@ -59,6 +71,7 @@ public class ServerController {
                     preparedStatement.setString(3, uList.get(i).getGender().toString());
                     preparedStatement.setString(4, uList.get(i).getUserdepart().toString());
                     preparedStatement.setString(5, Branchname);
+                   
 
                      System.out.println(preparedStatement);
                     // Step 3: Execute the query or update query
@@ -195,7 +208,23 @@ public class ServerController {
 
          }*/
         
-            public void insertAttList(String BranchName){
+            public void insertAttList(String BranchName, String nxtsql){
+                
+                
+            /*String nxtsql = "0000-00-00 00:00:00";
+            try {
+            ps1 = connection.prepareStatement("SELECT max(clock) from Attendance where branchName = ? ");
+            ps1.setString(1,BranchName);
+            rs1 = ps1.executeQuery();
+            while(rs1.next()){
+                nxtsql = rs1.getString(1);
+              
+            }
+            }catch(Exception e){                
+                    
+            }    
+                
+            */    
       
             ArrayList<Attendance> attL = new ArrayList<>();
             Controller ut = new Controller();
@@ -203,12 +232,16 @@ public class ServerController {
 
             String INSERT_USERS_SQL = "INSERT INTO Attendance" +
             "  (userId, userName, clock, remarks, branchName) VALUES " +
-            " (?, ?, ?,?, ?);";
+            " (?, ?, ?,?, ?)";
+                   
     
             try{
                 connection = ServerConnection.openConnection();
 
                  for(int i=0; i<attL.size(); i++){
+                     
+                    
+                     
                     PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL);
 
                     preparedStatement.setString(1, attL.get(i).getuId().toString());
@@ -216,6 +249,7 @@ public class ServerController {
                     preparedStatement.setString(3, attL.get(i).getAttTime().toString());
                     preparedStatement.setString(4, attL.get(i).getRemark().toString());
                     preparedStatement.setString(5, BranchName);
+                  
                    
                     /*preparedStatement.setString(1, "23");
                     preparedStatement.setString(2, "fd");
@@ -340,7 +374,23 @@ public class ServerController {
   
            
 
-                public void insertLeaveList(String BranchName){
+                public void insertLeaveList(String BranchName, String nxtsql){
+                    
+                    
+            /*String nxtsql = "0000-00-00 00:00:00";
+            try {
+            ps1 = connection.prepareStatement("SELECT max(submittedDate) from Leaves where branchName = ? ");
+            ps1.setString(1,BranchName);
+            rs1 = ps1.executeQuery();
+            while(rs1.next()){
+                nxtsql = rs1.getString(1);
+              
+            }
+            }catch(Exception e){                
+                    
+            }            
+                    
+            */        
                     
             ArrayList<User> leaveL = new ArrayList<>();
             Controller ut = new Controller();
@@ -348,7 +398,8 @@ public class ServerController {
 
             String INSERT_USERS_SQL = "INSERT INTO Leaves" +
             "  (userId, userName, fromDtae, toDate, submittedDate, branchName, remarks) VALUES " +
-            " (?, ?, ?, ?, ?,?,?);";
+            " (?, ?, ?, ?, ?,?,?)";
+                   
     
             try{
                 connection = ServerConnection.openConnection();
@@ -363,6 +414,7 @@ public class ServerController {
                     preparedStatement.setString(5, leaveL.get(i).getLeaveSubmitted().toString());
                     preparedStatement.setString(6, BranchName);
                     preparedStatement.setString(7, leaveL.get(i).getLeaveRemark().toString());
+                   
 
                      System.out.println(preparedStatement);
                     // Step 3: Execute the query or update query
@@ -506,7 +558,22 @@ public class ServerController {
 //        ss.insertUserList();
 //    }*/
                  
-                  public void insertOTList(String BranchName){
+                  public void insertOTList(String BranchName, String nxtsql){
+                      
+           /* String nxtsql = "0000-00-00 00:00:00";
+            try {
+            ps1 = connection.prepareStatement("SELECT max(date) from otTable where branchName = ? ");
+            ps1.setString(1,BranchName);
+            rs1 = ps1.executeQuery();
+            while(rs1.next()){
+                nxtsql = rs1.getString(1);
+              
+            }
+            }catch(Exception e){                
+                    
+            }                     
+                      
+            */          
                     
             ArrayList<Attendance> oTL = new ArrayList<>();
             Controller ut = new Controller();
@@ -514,7 +581,8 @@ public class ServerController {
 
             String INSERT_USERS_SQL = "INSERT INTO otTable" +
             "  (`userId`, `userName`, `clockIn`, `clockOut`, `date`, `otHours`, `branchName`) VALUES " +
-            " (?, ?, ?, ?, ?,?,?);";
+            " (?, ?, ?, ?, ?,?,?)";
+                    
     
             try{
                 connection = ServerConnection.openConnection();
@@ -529,6 +597,7 @@ public class ServerController {
                     preparedStatement.setString(5, oTL.get(i).getDate().toString());
                     preparedStatement.setInt(6, oTL.get(i).getOtHrs());
                     preparedStatement.setString(7, BranchName);
+                   
 
                      System.out.println(preparedStatement);
                     // Step 3: Execute the query or update query
