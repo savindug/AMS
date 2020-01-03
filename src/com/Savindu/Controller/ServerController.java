@@ -21,11 +21,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import static jdk.nashorn.api.scripting.ScriptUtils.convert;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 /**
  *
@@ -211,20 +215,8 @@ public class ServerController {
             public void insertAttList(String BranchName, String nxtsql){
                 
                 
-            /*String nxtsql = "0000-00-00 00:00:00";
-            try {
-            ps1 = connection.prepareStatement("SELECT max(clock) from Attendance where branchName = ? ");
-            ps1.setString(1,BranchName);
-            rs1 = ps1.executeQuery();
-            while(rs1.next()){
-                nxtsql = rs1.getString(1);
-              
-            }
-            }catch(Exception e){                
-                    
-            }    
-                
-            */    
+            
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
       
             ArrayList<Attendance> attL = new ArrayList<>();
             Controller ut = new Controller();
@@ -240,8 +232,16 @@ public class ServerController {
 
                  for(int i=0; i<attL.size(); i++){
                      
+                    Date   dateTime       = format.parse(nxtsql);
+                    Date  dateTime1 = format.parse(attL.get(i).getAttTime().toString());
+                   // JOptionPane.showMessageDialog(null,dateTime +"Records Successfully Updated!" + dateTime1);                   
+                    if(dateTime.compareTo(dateTime1) > 0 ){
+                        continue;
+                    }
                     
-                     
+                 
+                    
+                    
                     PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL);
 
                     preparedStatement.setString(1, attL.get(i).getuId().toString());
@@ -377,20 +377,7 @@ public class ServerController {
                 public void insertLeaveList(String BranchName, String nxtsql){
                     
                     
-            /*String nxtsql = "0000-00-00 00:00:00";
-            try {
-            ps1 = connection.prepareStatement("SELECT max(submittedDate) from Leaves where branchName = ? ");
-            ps1.setString(1,BranchName);
-            rs1 = ps1.executeQuery();
-            while(rs1.next()){
-                nxtsql = rs1.getString(1);
-              
-            }
-            }catch(Exception e){                
-                    
-            }            
-                    
-            */        
+          SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                     
             ArrayList<User> leaveL = new ArrayList<>();
             Controller ut = new Controller();
@@ -405,6 +392,18 @@ public class ServerController {
                 connection = ServerConnection.openConnection();
 
                  for(int i=0; i<leaveL.size(); i++){
+                     
+                    Date   dateTime       = format.parse(nxtsql);
+                    Date  dateTime1 = format.parse(leaveL.get(i).getLeaveSubmitted().toString());
+                    /*JOptionPane.showMessageDialog(null,dateTime +"Records Successfully Updated!" + dateTime1);      */             
+                    if(dateTime.compareTo(dateTime1) > 0 ){
+                        continue;
+                    } 
+                    
+                    
+                     
+                    
+                    
                     PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL);
 
                     preparedStatement.setString(1, leaveL.get(i).getuID().toString());
@@ -560,20 +559,7 @@ public class ServerController {
                  
                   public void insertOTList(String BranchName, String nxtsql){
                       
-           /* String nxtsql = "0000-00-00 00:00:00";
-            try {
-            ps1 = connection.prepareStatement("SELECT max(date) from otTable where branchName = ? ");
-            ps1.setString(1,BranchName);
-            rs1 = ps1.executeQuery();
-            while(rs1.next()){
-                nxtsql = rs1.getString(1);
-              
-            }
-            }catch(Exception e){                
-                    
-            }                     
-                      
-            */          
+           SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                     
             ArrayList<Attendance> oTL = new ArrayList<>();
             Controller ut = new Controller();
@@ -588,6 +574,17 @@ public class ServerController {
                 connection = ServerConnection.openConnection();
 
                  for(int i=0; i<oTL.size(); i++){
+                     
+                     
+                   Date   dateTime       = format.parse(nxtsql);
+                    Date  dateTime1 = format.parse(oTL.get(i).getClockIn().toString());
+                 //  JOptionPane.showMessageDialog(null,dateTime +"Records Successfully Updated!" + dateTime1);    
+                    if(dateTime.compareTo(dateTime1) > 0 ){
+                        continue;
+                    } 
+                   
+                     
+                     
                     PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL);
 
                     preparedStatement.setString(1, oTL.get(i).getuId().toString());

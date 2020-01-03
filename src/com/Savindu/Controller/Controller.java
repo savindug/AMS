@@ -71,10 +71,9 @@ public class Controller {
        Attendance att;
         ArrayList<Attendance> attL = new ArrayList<>();
         
-        String sql = "select u.pin as Employee_ID, u.UserName as User_Name, Min(a.clock) as Clock_In, Max(a.clock) as Clock_out, at.ItemName as Attend_Type , a.Remark from \n" +
-"                    ras_AttRecord a, ras_Dept d, ras_Users u, ras_AttTypeItem at\n" +
-"                    where  u.UID = a.ID and a.AttTypeId = at.ItemId\n" +
-"					GROUP BY CAST(clock AS DATE), u.pin, u.UserName, at.ItemName, a.Remark";
+        String sql = "select u.PIN as Employee_ID, u.UserName as User_Name, a.Clock as Clock, at.ItemName as Attend_Type, a.Remark from  \n" +
+                  "ras_AttRecord a, ras_Dept d, ras_Users u, ras_AttTypeItem at \n" +
+                  "where  u.UID = a.ID and a.AttTypeId = at.ItemId";
                      //"  order by usr.PIN";
 //                     
                      //String sql = "select * from ras_AttRecord group by pin";
@@ -86,12 +85,13 @@ public class Controller {
                 
                 while(rs.next()){
                     att = new Attendance();
+                     att = new Attendance();
                     att.setuId(rs.getString(1));
                     att.setuName(rs.getString(2));
+                   
                     att.setAttTime(rs.getString(3));
-                    att.setClockOut(rs.getString(4));
-                    att.setVerifyMode(rs.getString(5));
-                    att.setRemark(rs.getString(6));
+                    att.setVerifyMode(rs.getString(4));
+                    att.setRemark(rs.getString(5));
                     attL.add(att);
                     //System.out.println(user.getuID()+"\t\t"+user.getuName()+"\t\t"+user.getGender()+"\t\t"+user.getCreateDate()+"\t\t"+user.getLastLoggedIn());
 
