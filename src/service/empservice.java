@@ -9,6 +9,14 @@ import com.Savindu.Controller.ServerController;
 import com.Savindu.Entity.User;
 import java.sql.Connection;
 import com.Savindu.Util.DBConnection;
+import com.Savindu.Util.ServerConnection;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,6 +36,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.Date;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -579,6 +588,69 @@ public class empservice {
         
         return rs;
     }
+        
+     public void viewFieldOfficers(int id){
+         ResultSet myrs = null;
+         int result = 0;
+         con = DBConnect.connect();
+         InputStream input = null;
+         FileOutputStream output = null;
+          
+            
+            String sql = "select file,Name from FieldOfficers where id = ?";
+            
+            
+            
+             try{
+                con = ServerConnection.openConnection();
+                PreparedStatement preparedStatement = con.prepareStatement(sql);
+                 preparedStatement.setInt(1, id);
+                 
+                 myrs = preparedStatement.executeQuery();
+                 File thefile = new File("FieldReports\\"+id+"-report.pdf");
+                 output = new FileOutputStream(thefile);
+                 
+                 if(myrs.next()){
+                     input = myrs.getBinaryStream("file");
+                     
+                     byte[] buffer = new byte[1024];
+                     while ( input.read(buffer)>0){
+                         output.write(buffer);
+                     }
+                     
+                 }
+                 
+                 
+                 JOptionPane.showMessageDialog(null, "Report Saved");
+
+            }catch(Exception e){
+                    JOptionPane.showMessageDialog(null, "Error");
+                    Logger.getLogger(empservice.class.getName()).log(Level.SEVERE, null, e);
+                }
+             
+             finally{
+                 if(input != null){
+                     try {
+                         input.close();
+                     } catch (IOException ex) {
+                         Logger.getLogger(empservice.class.getName()).log(Level.SEVERE, null, ex);
+                     }
+                 }
+                 
+                 
+                 if(output != null){
+                     try {
+                         output.close();
+                     } catch (IOException ex) {
+                         Logger.getLogger(empservice.class.getName()).log(Level.SEVERE, null, ex);
+                     }
+                 }
+                 
+                 
+             }
+                
+    }   
+        
         
         
 }

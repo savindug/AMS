@@ -34,6 +34,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import static jdk.nashorn.api.scripting.ScriptUtils.convert;
+import static jdk.nashorn.tools.ShellFunctions.input;
 import org.joda.time.DateTime;
 
 
@@ -651,7 +652,7 @@ public class ServerController {
     }
 
     public void insertFieldOfficers(String filePath, String branchname){
-                File pdfFile = new File(filePath);
+           /*    File pdfFile = new File(filePath);
                 byte[] pdfData = new byte[(int) pdfFile.length()];
                 DataInputStream dis;
             try {
@@ -664,6 +665,9 @@ public class ServerController {
                 Logger.getLogger(ServerController.class.getName()).log(Level.SEVERE, null, ex);
             }
             
+            */
+            
+            FileInputStream  input = null;
             String sql = "INSERT INTO `FieldOfficers`(`Name`, `file`, `branch`, `uploadedOn`) "
                     + "VALUES (?, ?, ?, ?)";
             
@@ -672,17 +676,22 @@ public class ServerController {
              try{
                 connection = ServerConnection.openConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                
+                File theFile = new File(filePath);
+                input = new FileInputStream(theFile);
+                
+                
                  preparedStatement.setString(1, filePath);
-                 preparedStatement.setBytes(2, pdfData);
+                 preparedStatement.setBinaryStream(2, input);
                  preparedStatement.setString(3, branchname);
                  preparedStatement.setString(4, currentTime);
-                 
+                 try{result = preparedStatement.executeUpdate(); }catch(Exception e){};
                   if(result > 0){
-                       /* JOptionPane.showMessageDialog(null, "Records Successfully Updated!");*/
+                       JOptionPane.showMessageDialog(null, "Upload Completed");
                     }
 
             }catch(Exception e){
-                    JOptionPane.showMessageDialog(null, "Attendance Table Error");
+                    JOptionPane.showMessageDialog(null, "Upload Error");
                 }
                 
     }

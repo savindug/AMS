@@ -69,6 +69,8 @@ public class AppInterface extends javax.swing.JFrame {
         branchnamedisplay.setText(branchname);
         
         JOptionPane.showMessageDialog(null, "Uploading Data to Server, Please Wait");
+        
+        if(! branchname.equals("Head_Office") && ! branchname.equals("District_Office_Galle")){
         ServerController ss = new ServerController();
         empservice es = new empservice();
         ss.insertUserList(branchname, es.maxemp(branchname));
@@ -76,6 +78,9 @@ public class AppInterface extends javax.swing.JFrame {
         ss.insertAttList(branchname, es.maxa(branchname));
         ss.insertLeaveList(branchname, es.maxl(branchname));
         ss.insertOTList(branchname, es.maxo(branchname));
+        }
+        
+        
     }
     
     void viewPanel(String cname) {
@@ -173,7 +178,6 @@ public class AppInterface extends javax.swing.JFrame {
         addnotes = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
         btnaddnote = new javax.swing.JButton();
-        btnbackaddreports4 = new javax.swing.JButton();
         fileName = new javax.swing.JTextField();
         viewreportsatt = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
@@ -297,7 +301,7 @@ public class AppInterface extends javax.swing.JFrame {
                     .addComponent(btnviewreports, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnaddreports, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnmainmenu, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 1, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1020,14 +1024,7 @@ public class AppInterface extends javax.swing.JFrame {
             }
         });
 
-        btnbackaddreports4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        btnbackaddreports4.setText("Back");
-        btnbackaddreports4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnbackaddreports4ActionPerformed(evt);
-            }
-        });
-
+        fileName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         fileName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fileNameActionPerformed(evt);
@@ -1038,21 +1035,18 @@ public class AppInterface extends javax.swing.JFrame {
         addnotes.setLayout(addnotesLayout);
         addnotesLayout.setHorizontalGroup(
             addnotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addnotesLayout.createSequentialGroup()
-                .addContainerGap(353, Short.MAX_VALUE)
+            .addGroup(addnotesLayout.createSequentialGroup()
+                .addContainerGap(351, Short.MAX_VALUE)
                 .addGroup(addnotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(addnotesLayout.createSequentialGroup()
-                        .addComponent(fileName, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47)
-                        .addComponent(btnaddnote, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(581, 581, 581))
-                    .addGroup(addnotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addnotesLayout.createSequentialGroup()
-                            .addComponent(jLabel21)
-                            .addGap(603, 603, 603))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addnotesLayout.createSequentialGroup()
-                            .addComponent(btnbackaddreports4, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(945, 945, 945)))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addnotesLayout.createSequentialGroup()
+                        .addComponent(jLabel21)
+                        .addGap(603, 603, 603))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addnotesLayout.createSequentialGroup()
+                        .addComponent(btnaddnote, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(633, 633, 633))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addnotesLayout.createSequentialGroup()
+                        .addComponent(fileName, javax.swing.GroupLayout.PREFERRED_SIZE, 784, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(370, 370, 370))))
         );
         addnotesLayout.setVerticalGroup(
             addnotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1060,12 +1054,10 @@ public class AppInterface extends javax.swing.JFrame {
                 .addGap(67, 67, 67)
                 .addComponent(jLabel21)
                 .addGap(174, 174, 174)
-                .addGroup(addnotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnaddnote, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fileName, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(286, 286, 286)
-                .addComponent(btnbackaddreports4, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(283, Short.MAX_VALUE))
+                .addComponent(fileName, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(69, 69, 69)
+                .addComponent(btnaddnote, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(500, Short.MAX_VALUE))
         );
 
         jPanel3.add(addnotes, "addnotes");
@@ -1538,6 +1530,11 @@ public class AppInterface extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        fieldtable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                fieldtableMouseClicked(evt);
+            }
+        });
         jScrollPane7.setViewportView(fieldtable);
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -1586,7 +1583,7 @@ public class AppInterface extends javax.swing.JFrame {
                     .addComponent(fieldbranch))
                 .addGap(50, 50, 50)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(279, Short.MAX_VALUE))
+                .addContainerGap(295, Short.MAX_VALUE))
         );
 
         jPanel3.add(viewnotes, "viewnotes");
@@ -1688,14 +1685,14 @@ public class AppInterface extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1088, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1104, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1853,7 +1850,7 @@ public class AppInterface extends javax.swing.JFrame {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("PDF Documents", "pdf"));
-        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("MS Office Documents", "docx", "xlsx", "pptx"));
+        /*fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("MS Office Documents", "docx", "xlsx", "pptx"));*/
         fileChooser.setAcceptAllFileFilterUsed(false);
         fileChooser.showOpenDialog(null);
         
@@ -1862,8 +1859,8 @@ public class AppInterface extends javax.swing.JFrame {
         fileName.setText(f.toString());
         System.out.println("Selected file from JFileChooser => "+f.toString());
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        filePath = "D:\\Attendance-Management-System\\downloads"+f.getName()+timestamp.getTime();
-         Path temp = null;
+       filePath = "FieldReports\\"+timestamp.getTime()+f.getName();
+        Path temp = null;
         try {
             temp = Files.move 
                 (Paths.get(f.toString()),
@@ -2003,11 +2000,6 @@ public class AppInterface extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btnbackaddreports3ActionPerformed
-
-    private void btnbackaddreports4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbackaddreports4ActionPerformed
-        // TODO add your handling code here:
-        viewPanel("addreportscard");
-    }//GEN-LAST:event_btnbackaddreports4ActionPerformed
 
     private void btnbackaddreports5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbackaddreports5ActionPerformed
         // TODO add your handling code here:
@@ -2296,6 +2288,17 @@ public class AppInterface extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_fileNameActionPerformed
 
+    private void fieldtableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fieldtableMouseClicked
+        // TODO add your handling code here:
+        
+        int r = fieldtable.getSelectedRow();
+        String id = fieldtable.getValueAt(r, 0).toString();
+        int idd = Integer.parseInt(id);
+        empservice es = new empservice();
+        es.viewFieldOfficers(idd);
+        
+    }//GEN-LAST:event_fieldtableMouseClicked
+
     
     
     /**
@@ -2354,7 +2357,6 @@ public class AppInterface extends javax.swing.JFrame {
     private javax.swing.JButton btnattablesearch;
     private javax.swing.JButton btnbackaddreports2;
     private javax.swing.JButton btnbackaddreports3;
-    private javax.swing.JButton btnbackaddreports4;
     private javax.swing.JButton btnbackaddreports5;
     private javax.swing.JButton btnchangesettings;
     private javax.swing.JButton btnconfirm;
