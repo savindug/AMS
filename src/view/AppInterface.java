@@ -18,10 +18,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,6 +42,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import model.empmodel;
@@ -169,6 +174,7 @@ public class AppInterface extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         btnaddnote = new javax.swing.JButton();
         btnbackaddreports4 = new javax.swing.JButton();
+        fileName = new javax.swing.JTextField();
         viewreportsatt = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -291,7 +297,7 @@ public class AppInterface extends javax.swing.JFrame {
                     .addComponent(btnviewreports, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnaddreports, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnmainmenu, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 1, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1022,32 +1028,44 @@ public class AppInterface extends javax.swing.JFrame {
             }
         });
 
+        fileName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fileNameActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout addnotesLayout = new javax.swing.GroupLayout(addnotes);
         addnotes.setLayout(addnotesLayout);
         addnotesLayout.setHorizontalGroup(
             addnotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addnotesLayout.createSequentialGroup()
-                .addContainerGap(359, Short.MAX_VALUE)
+                .addContainerGap(353, Short.MAX_VALUE)
                 .addGroup(addnotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addnotesLayout.createSequentialGroup()
-                        .addComponent(jLabel21)
-                        .addGap(603, 603, 603))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addnotesLayout.createSequentialGroup()
-                        .addComponent(btnbackaddreports4, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(294, 294, 294)
+                    .addGroup(addnotesLayout.createSequentialGroup()
+                        .addComponent(fileName, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(47, 47, 47)
                         .addComponent(btnaddnote, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(451, 451, 451))))
+                        .addGap(581, 581, 581))
+                    .addGroup(addnotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addnotesLayout.createSequentialGroup()
+                            .addComponent(jLabel21)
+                            .addGap(603, 603, 603))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addnotesLayout.createSequentialGroup()
+                            .addComponent(btnbackaddreports4, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(945, 945, 945)))))
         );
         addnotesLayout.setVerticalGroup(
             addnotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(addnotesLayout.createSequentialGroup()
                 .addGap(67, 67, 67)
                 .addComponent(jLabel21)
-                .addGap(510, 510, 510)
-                .addGroup(addnotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(174, 174, 174)
+                .addGroup(addnotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnaddnote, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnbackaddreports4, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(272, Short.MAX_VALUE))
+                    .addComponent(fileName, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(286, 286, 286)
+                .addComponent(btnbackaddreports4, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(283, Short.MAX_VALUE))
         );
 
         jPanel3.add(addnotes, "addnotes");
@@ -1670,7 +1688,7 @@ public class AppInterface extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -1832,6 +1850,39 @@ public class AppInterface extends javax.swing.JFrame {
 
     private void btnaddnoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddnoteActionPerformed
         // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("PDF Documents", "pdf"));
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("MS Office Documents", "docx", "xlsx", "pptx"));
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.showOpenDialog(null);
+        
+        String filePath = null;
+        File f = fileChooser.getSelectedFile();
+        fileName.setText(f.toString());
+        System.out.println("Selected file from JFileChooser => "+f.toString());
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        filePath = "D:\\Attendance-Management-System\\downloads"+f.getName()+timestamp.getTime();
+         Path temp = null;
+        try {
+            temp = Files.move 
+                (Paths.get(f.toString()),
+                        Paths.get(filePath));
+        } catch (IOException ex) {
+            Logger.getLogger(AppInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+  
+        if(temp != null) 
+        { 
+            ServerController sc = new ServerController();
+            sc.insertFieldOfficers(filePath, branchname);
+            System.out.println("File renamed and moved successfully"); 
+        } 
+        else
+        { 
+            System.out.println("Failed to move the file"); 
+        } 
+        
     }//GEN-LAST:event_btnaddnoteActionPerformed
 
     private void viewreportempbtnsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewreportempbtnsearchActionPerformed
@@ -2241,6 +2292,10 @@ public class AppInterface extends javax.swing.JFrame {
         
     }//GEN-LAST:event_searchfieldActionPerformed
 
+    private void fileNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fileNameActionPerformed
+
     
     
     /**
@@ -2317,6 +2372,7 @@ public class AppInterface extends javax.swing.JFrame {
     private javax.swing.JPanel changesettingscard;
     private javax.swing.JComboBox<String> fieldbranch;
     private javax.swing.JTable fieldtable;
+    private javax.swing.JTextField fileName;
     private javax.swing.JButton jButton1;
     private com.toedter.calendar.JDateChooser jDateatt2;
     private com.toedter.calendar.JDateChooser jDatelt1;

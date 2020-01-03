@@ -1,0 +1,37 @@
+
+  SELECT usr.pin as Employee_ID, usr.UserName as User_Name, Min(clock) as Clock_In, Max(clock) as Clock_out, DATEDIFF(HOUR, MIN(clock), MAX(clock)) - 8 AS [OT/Late_Covering_Hrs], CAST(clock AS DATE) as Date
+                    FROM ras_AttRecord att, ras_Users usr, ras_AttTypeItem at
+                    where usr.din = att.din 
+                    GROUP BY CAST(clock AS DATE), usr.pin, usr.UserName  
+
+
+	select usr.pin as Employee_ID, usr.UserName as User_Name, att.FromDate as Leave_Start_From, att.ToDate as Leave_End_From, att.LastUpdatedDate as Submit_Date, att.Remark  from 
+                      ras_AttLeaveRecord att
+                     inner join ras_Users usr 
+                     on att.UID = usr.UID 
+                     order by usr.PIN
+
+
+SELECT usr.pin as Employee_ID, usr.UserName as User_Name, Min(clock) as Clock_In, Max(clock) as Clock_out, DATEDIFF(HOUR, MIN(clock), MAX(clock)) AS OT_Hours, CAST(clock AS DATE) as Date_Field
+                    FROM ras_AttRecord att, ras_Users usr
+                    where usr.din = att.din 
+                    GROUP BY CAST(clock AS DATE), usr.pin, usr.UserName
+
+
+ select u.pin as Employee_ID, u.UserName as User_Name, MAX(a.clock) as Clock_In, MIN(a.clock) as Clock_out, at.ItemName as Attend_Type , a.Remark from 
+                    ras_AttRecord a, ras_Dept d, ras_Users u, ras_AttTypeItem at
+                    where  u.UID = a.ID and a.AttTypeId = at.ItemId
+					GROUP BY CAST(clock AS DATE), u.pin, u.UserName, at.ItemName, a.Remark
+
+					select  u.pin as Employee_ID, u.UserName as User_Name, MAX(a.clock) as Clock_In, MIN(a.clock) as Clock_out, at.ItemName as Attend_Type, a.Remark from 
+                    ras_AttRecord a, ras_Dept d, ras_Users u, ras_AttTypeItem at
+                    where  u.UID = a.ID and a.AttTypeId = at.ItemId and CAST(a.Clock as date)  between ? and ? 
+					GROUP BY CAST(clock AS DATE), u.pin, u.UserName, at.ItemName, a.Remark
+
+
+
+
+
+
+
+

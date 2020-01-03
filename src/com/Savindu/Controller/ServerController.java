@@ -16,16 +16,28 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import static jdk.nashorn.api.scripting.ScriptUtils.convert;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 /**
  *
@@ -211,20 +223,8 @@ public class ServerController {
             public void insertAttList(String BranchName, String nxtsql){
                 
                 
-            /*String nxtsql = "0000-00-00 00:00:00";
-            try {
-            ps1 = connection.prepareStatement("SELECT max(clock) from Attendance where branchName = ? ");
-            ps1.setString(1,BranchName);
-            rs1 = ps1.executeQuery();
-            while(rs1.next()){
-                nxtsql = rs1.getString(1);
-              
-            }
-            }catch(Exception e){                
-                    
-            }    
-                
-            */    
+            
+            DateTimeFormatter formatter = DateTimeFormat.forPattern("mm/dd/yyyy HH:mm:ss");
       
             ArrayList<Attendance> attL = new ArrayList<>();
             Controller ut = new Controller();
@@ -240,8 +240,15 @@ public class ServerController {
 
                  for(int i=0; i<attL.size(); i++){
                      
+                    DateTime dateTime = formatter.parseDateTime(nxtsql);
+                    DateTime dateTime1 = formatter.parseDateTime(attL.get(i).getAttTime().toString());
+                                        
+                    if(dateTime1.getMillis() < dateTime.getMillis()){
+                        continue;
+                    }
                     
-                     
+                    
+                    
                     PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL);
 
                     preparedStatement.setString(1, attL.get(i).getuId().toString());
@@ -377,20 +384,7 @@ public class ServerController {
                 public void insertLeaveList(String BranchName, String nxtsql){
                     
                     
-            /*String nxtsql = "0000-00-00 00:00:00";
-            try {
-            ps1 = connection.prepareStatement("SELECT max(submittedDate) from Leaves where branchName = ? ");
-            ps1.setString(1,BranchName);
-            rs1 = ps1.executeQuery();
-            while(rs1.next()){
-                nxtsql = rs1.getString(1);
-              
-            }
-            }catch(Exception e){                
-                    
-            }            
-                    
-            */        
+          DateTimeFormatter formatter = DateTimeFormat.forPattern("mm/dd/yyyy HH:mm:ss");
                     
             ArrayList<User> leaveL = new ArrayList<>();
             Controller ut = new Controller();
@@ -405,6 +399,14 @@ public class ServerController {
                 connection = ServerConnection.openConnection();
 
                  for(int i=0; i<leaveL.size(); i++){
+                     
+                    DateTime dateTime = formatter.parseDateTime(nxtsql);
+                    DateTime dateTime1 = formatter.parseDateTime(leaveL.get(i).getLeaveSubmitted().toString());
+                                        
+                    if(dateTime1.getMillis() < dateTime.getMillis()){
+                        continue;
+                    }
+                    
                     PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL);
 
                     preparedStatement.setString(1, leaveL.get(i).getuID().toString());
@@ -560,20 +562,7 @@ public class ServerController {
                  
                   public void insertOTList(String BranchName, String nxtsql){
                       
-           /* String nxtsql = "0000-00-00 00:00:00";
-            try {
-            ps1 = connection.prepareStatement("SELECT max(date) from otTable where branchName = ? ");
-            ps1.setString(1,BranchName);
-            rs1 = ps1.executeQuery();
-            while(rs1.next()){
-                nxtsql = rs1.getString(1);
-              
-            }
-            }catch(Exception e){                
-                    
-            }                     
-                      
-            */          
+           DateTimeFormatter formatter = DateTimeFormat.forPattern("mm/dd/yyyy HH:mm:ss");
                     
             ArrayList<Attendance> oTL = new ArrayList<>();
             Controller ut = new Controller();
@@ -588,6 +577,16 @@ public class ServerController {
                 connection = ServerConnection.openConnection();
 
                  for(int i=0; i<oTL.size(); i++){
+                     
+                     
+                    DateTime dateTime = formatter.parseDateTime(nxtsql);
+                    DateTime dateTime1 = formatter.parseDateTime(oTL.get(i).getClockIn().toString());
+                                        
+                    if(dateTime1.getMillis() < dateTime.getMillis()){
+                        continue;
+                    } 
+                     
+                     
                     PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL);
 
                     preparedStatement.setString(1, oTL.get(i).getuId().toString());
@@ -615,6 +614,43 @@ public class ServerController {
                 }
             
 
+    }
+
+    public void insertFieldOfficers(String filePath, String branchname){
+                File pdfFile = new File(filePath);
+                byte[] pdfData = new byte[(int) pdfFile.length()];
+                DataInputStream dis;
+            try {
+                dis = new DataInputStream(new FileInputStream(pdfFile));
+                dis.readFully(pdfData);  // read from file into byte[] array
+                dis.close();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(ServerController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(ServerController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            String sql = "INSERT INTO `FieldOfficers`(`Name`, `file`, `branch`, `uploadedOn`) "
+                    + "VALUES (?, ?, ?, ?)";
+            
+            String currentTime = LocalDateTime.now().toString();
+            
+             try{
+                connection = ServerConnection.openConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                 preparedStatement.setString(1, filePath);
+                 preparedStatement.setBytes(2, pdfData);
+                 preparedStatement.setString(3, branchname);
+                 preparedStatement.setString(4, currentTime);
+                 
+                  if(result > 0){
+                       /* JOptionPane.showMessageDialog(null, "Records Successfully Updated!");*/
+                    }
+
+            }catch(Exception e){
+                    JOptionPane.showMessageDialog(null, "Attendance Table Error");
+                }
+                
     }
         
     }

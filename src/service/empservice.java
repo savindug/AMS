@@ -13,11 +13,23 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.empmodel;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import util.DBConnect;
+
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.util.Date;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 /**
  *
@@ -302,13 +314,21 @@ public class empservice {
          
         con = DBConnect.connect();
         ResultSet rs = null;
-        String nxtsql = "0000-00-00 00:00:00";
+        String nxtsql ="0000-00-00 00:00:00";
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("mm/dd/yyyy HH:mm:ss");
+        
+        
+        
             try {
             ps = con.prepareStatement("SELECT max(clock) from Attendance where branchName = ? ");
             ps.setString(1,Branchname);
             rs = ps.executeQuery();
             while(rs.next()){
+             
+                
                 nxtsql = rs.getString(1);
+                
+                
                
               
             }
@@ -324,9 +344,10 @@ public class empservice {
          
         con = DBConnect.connect();
         ResultSet rs = null;
-        String nxtsql = "0000-00-00 00:00:00";
+        String nxtsql ="0000-00-00 00:00:00";
+        
             try {
-            ps = con.prepareStatement("SELECT max(submittedDate) from Leaves where branchName = ? ");
+            ps = con.prepareStatement("SELECT max(submittedDate) from otTable where branchName = ? ");
             ps.setString(1,Branchname);
             rs = ps.executeQuery();
             while(rs.next()){
@@ -347,7 +368,7 @@ public class empservice {
          
         con = DBConnect.connect();
         ResultSet rs = null;
-        String nxtsql = "0000-00-00 00:00:00";
+        String nxtsql ="0000-00-00 00:00:00";
             try {
             ps = con.prepareStatement("SELECT max(clockIn) from Leaves where branchName = ? ");
             ps.setString(1,Branchname);
@@ -425,10 +446,10 @@ public class empservice {
         ResultSet rs = null;
         Statement st = null;
         
-        String sql ="SELECT att.din, usr.UserName , MAX(clock) as Clock_In, MIN(clock) as Clock_out, DATEDIFF(HOUR, MIN(clock), MAX(clock)) AS Othours, CAST(clock AS DATE) as DateField\n" +
-                    "FROM ras_AttRecord att, ras_Users usr\n" +
-                    "where usr.din = att.din \n" +
-                    "GROUP BY CAST(clock AS DATE), att.din, usr.UserName";
+        String sql ="  SELECT usr.pin as Employee_ID, usr.UserName as User_Name, Min(clock) as Clock_In, Max(clock) as Clock_out, DATEDIFF(HOUR, MIN(clock), MAX(clock)) - 8 AS [OT/Late_Covering_Hrs], CAST(clock AS DATE) as Date\n" +
+"                    FROM ras_AttRecord att, ras_Users usr, ras_AttTypeItem at\n" +
+"                    where usr.din = att.din \n" +
+"                    GROUP BY CAST(clock AS DATE), usr.pin, usr.UserName";
         
             
             try{
@@ -535,11 +556,12 @@ public class empservice {
         ResultSet rs = null;
         Statement st = null;
         
-        String sql = "SELECT att.din, usr.UserName , MAX(clock) as Clock_In, MIN(clock) as Clock_out, DATEDIFF(HOUR, MIN(clock), MAX(clock)) AS Othours, CAST(clock AS DATE) as DateField\n" +
-                    "FROM ras_AttRecord att, ras_Users usr\n" +
-                    "where usr.din = att.din and CAST(clock AS DATE) between ? and ? \n" +
-                    "GROUP BY CAST(clock AS DATE), att.din, usr.UserName";
+        String sql = "  SELECT usr.pin as Employee_ID, usr.UserName as User_Name, Min(clock) as Clock_In, Max(clock) as Clock_out, DATEDIFF(HOUR, MIN(clock), MAX(clock)) - 8 AS [OT/Late_Covering_Hrs], CAST(clock AS DATE) as Date\n" +
+"                    FROM ras_AttRecord att, ras_Users usr, ras_AttTypeItem at\n" +
+"                    where usr.din = att.din CAST(clock AS DATE) between ? and ? \n" +
+"                    GROUP BY CAST(clock AS DATE), usr.pin, usr.UserName";
         
+
             
             try{
                 connection = DBConnection.openConnection();
@@ -557,4 +579,6 @@ public class empservice {
         
         return rs;
     }
+        
+        
 }

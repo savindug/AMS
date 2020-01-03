@@ -26,6 +26,17 @@ public class ServerConnection {
 	private static final String PASSWORD = "Ivw9uq1gro";
 	
     public static Connection connection = null;
+    
+    /*private static final String URL = "jdbc:mysql://johnny.heliohost.org:3306/nwsb_att_sys";
+	
+	private static final String DRIVER = "com.mysql.jdbc.Driver";
+	
+	private static final String USERNAME = "nwsb";
+	
+	private static final String PASSWORD = "nw2251997";
+	
+    public static Connection connection = null;*/
+	
 	
 
 public static Connection openConnection() {
