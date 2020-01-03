@@ -446,10 +446,10 @@ public class empservice {
         ResultSet rs = null;
         Statement st = null;
         
-        String sql ="SELECT  distinct att.din, usr.UserName , MAX(clock) as Clock_In, MIN(clock) as Clock_out, DATEDIFF(HOUR, MIN(clock), MAX(clock)) AS Othours, CAST(clock AS DATE) as DateField\n" +
-                    "FROM ras_AttRecord att, ras_Users usr\n" +
-                    "where usr.din = att.din \n" +
-                    "GROUP BY CAST(clock AS DATE), att.din, usr.UserName";
+        String sql ="  SELECT usr.pin as Employee_ID, usr.UserName as User_Name, Min(clock) as Clock_In, Max(clock) as Clock_out, DATEDIFF(HOUR, MIN(clock), MAX(clock)) - 8 AS [OT/Late_Covering_Hrs], CAST(clock AS DATE) as Date\n" +
+"                    FROM ras_AttRecord att, ras_Users usr, ras_AttTypeItem at\n" +
+"                    where usr.din = att.din \n" +
+"                    GROUP BY CAST(clock AS DATE), usr.pin, usr.UserName";
         
             
             try{
@@ -556,11 +556,12 @@ public class empservice {
         ResultSet rs = null;
         Statement st = null;
         
-        String sql = "SELECT  distinct  att.din, usr.UserName , MAX(clock) as Clock_In, MIN(clock) as Clock_out, DATEDIFF(HOUR, MIN(clock), MAX(clock)) AS Othours, CAST(clock AS DATE) as DateField\n" +
-                    "FROM ras_AttRecord att, ras_Users usr\n" +
-                    "where usr.din = att.din and CAST(clock AS DATE) between ? and ? \n" +
-                    "GROUP BY CAST(clock AS DATE), att.din, usr.UserName";
+        String sql = "  SELECT usr.pin as Employee_ID, usr.UserName as User_Name, Min(clock) as Clock_In, Max(clock) as Clock_out, DATEDIFF(HOUR, MIN(clock), MAX(clock)) - 8 AS [OT/Late_Covering_Hrs], CAST(clock AS DATE) as Date\n" +
+"                    FROM ras_AttRecord att, ras_Users usr, ras_AttTypeItem at\n" +
+"                    where usr.din = att.din CAST(clock AS DATE) between ? and ? \n" +
+"                    GROUP BY CAST(clock AS DATE), usr.pin, usr.UserName";
         
+
             
             try{
                 connection = DBConnection.openConnection();
@@ -578,4 +579,6 @@ public class empservice {
         
         return rs;
     }
+        
+        
 }

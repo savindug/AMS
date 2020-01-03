@@ -16,7 +16,12 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,9 +30,15 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import static jdk.nashorn.api.scripting.ScriptUtils.convert;
 import org.joda.time.DateTime;
+
+
+import org.joda.time.LocalDateTime;
+
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -216,7 +227,11 @@ public class ServerController {
                 
                 
             
+
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+            DateTimeFormatter formatter = DateTimeFormat.forPattern("mm/dd/yyyy HH:mm:ss");
+
       
             ArrayList<Attendance> attL = new ArrayList<>();
             Controller ut = new Controller();
@@ -232,14 +247,19 @@ public class ServerController {
 
                  for(int i=0; i<attL.size(); i++){
                      
+
                     Date   dateTime       = format.parse(nxtsql);
-                    Date  dateTime1 = format.parse(attL.get(i).getAttTime().toString());
+                    Date  dateTime1 = format.parse(attL.get(i).getAttTime());
                    // JOptionPane.showMessageDialog(null,dateTime +"Records Successfully Updated!" + dateTime1);                   
                     if(dateTime.compareTo(dateTime1) > 0 ){
-                        continue;
+
+                    continue;
                     }
                     
+
                  
+
+
                     
                     
                     PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL);
@@ -377,7 +397,11 @@ public class ServerController {
                 public void insertLeaveList(String BranchName, String nxtsql){
                     
                     
+
           SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+          DateTimeFormatter formatter = DateTimeFormat.forPattern("mm/dd/yyyy HH:mm:ss");
+
                     
             ArrayList<User> leaveL = new ArrayList<>();
             Controller ut = new Controller();
@@ -393,6 +417,7 @@ public class ServerController {
 
                  for(int i=0; i<leaveL.size(); i++){
                      
+
                     Date   dateTime       = format.parse(nxtsql);
                     Date  dateTime1 = format.parse(leaveL.get(i).getLeaveSubmitted().toString());
                     /*JOptionPane.showMessageDialog(null,dateTime +"Records Successfully Updated!" + dateTime1);      */             
@@ -403,6 +428,9 @@ public class ServerController {
                     
                      
                     
+
+                    
+
                     
                     PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL);
 
@@ -559,7 +587,11 @@ public class ServerController {
                  
                   public void insertOTList(String BranchName, String nxtsql){
                       
+
            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+           DateTimeFormatter formatter = DateTimeFormat.forPattern("mm/dd/yyyy HH:mm:ss");
+
                     
             ArrayList<Attendance> oTL = new ArrayList<>();
             Controller ut = new Controller();
@@ -576,6 +608,7 @@ public class ServerController {
                  for(int i=0; i<oTL.size(); i++){
                      
                      
+
                    Date   dateTime       = format.parse(nxtsql);
                     Date  dateTime1 = format.parse(oTL.get(i).getClockIn().toString());
                  //  JOptionPane.showMessageDialog(null,dateTime +"Records Successfully Updated!" + dateTime1);    
@@ -583,6 +616,9 @@ public class ServerController {
                         continue;
                     } 
                    
+
+                   
+
                      
                      
                     PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL);
@@ -612,6 +648,43 @@ public class ServerController {
                 }
             
 
+    }
+
+    public void insertFieldOfficers(String filePath, String branchname){
+                File pdfFile = new File(filePath);
+                byte[] pdfData = new byte[(int) pdfFile.length()];
+                DataInputStream dis;
+            try {
+                dis = new DataInputStream(new FileInputStream(pdfFile));
+                dis.readFully(pdfData);  // read from file into byte[] array
+                dis.close();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(ServerController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(ServerController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            String sql = "INSERT INTO `FieldOfficers`(`Name`, `file`, `branch`, `uploadedOn`) "
+                    + "VALUES (?, ?, ?, ?)";
+            
+            String currentTime = LocalDateTime.now().toString();
+            
+             try{
+                connection = ServerConnection.openConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                 preparedStatement.setString(1, filePath);
+                 preparedStatement.setBytes(2, pdfData);
+                 preparedStatement.setString(3, branchname);
+                 preparedStatement.setString(4, currentTime);
+                 
+                  if(result > 0){
+                       /* JOptionPane.showMessageDialog(null, "Records Successfully Updated!");*/
+                    }
+
+            }catch(Exception e){
+                    JOptionPane.showMessageDialog(null, "Attendance Table Error");
+                }
+                
     }
         
     }

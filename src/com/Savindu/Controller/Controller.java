@@ -191,9 +191,9 @@ public class Controller {
          Attendance ot;
         ArrayList<Attendance> otL = new ArrayList<>();
         
-        String sql ="SELECT usr.pin as Employee_ID, usr.UserName as User_Name, Min(clock) as Clock_In, Max(clock) as Clock_out, DATEDIFF(HOUR, MIN(clock), MAX(clock)) AS OT_Hours, CAST(clock AS DATE) as Date_Field\n" +
-"                    FROM ras_AttRecord att, ras_Users usr\n" +
-"                    where usr.din = att.din \n" +
+        String sql ="SELECT usr.pin as Employee_ID, usr.UserName as User_Name, Min(clock) as Clock_In, Max(clock) as Clock_out, DATEDIFF(HOUR, MIN(clock), MAX(clock)) - 8 AS [OT/Late_Covering_Hrs], CAST(clock AS DATE) as Date\n" +
+"                    FROM ras_AttRecord att, ras_Users usr, ras_AttTypeItem at\n" +
+"                    where usr.din = att.din\n" +
 "                    GROUP BY CAST(clock AS DATE), usr.pin, usr.UserName";
         
             
