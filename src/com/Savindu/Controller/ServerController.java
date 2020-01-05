@@ -290,6 +290,7 @@ public class ServerController {
 
             }catch(Exception e){
                     JOptionPane.showMessageDialog(null, "Attendance Table Error");
+                    e.printStackTrace();
                 }
            
 
@@ -456,7 +457,7 @@ public class ServerController {
 
             }catch(Exception e){
                     JOptionPane.showMessageDialog(null, "Leave Table Error");
-                   
+                   e.printStackTrace();
                 }
             
 
@@ -645,7 +646,7 @@ public class ServerController {
 
             }catch(Exception e){
                     JOptionPane.showMessageDialog(null, "OT Table Error");
-                   
+                   e.printStackTrace();
                 }
             
 

@@ -323,7 +323,7 @@ public class empservice {
          
         con = DBConnect.connect();
         ResultSet rs = null;
-        String nxtsql ="0000-00-00 00:00:00";
+        String nxtsql ="2015-12-10 16:15:54";
         DateTimeFormatter formatter = DateTimeFormat.forPattern("mm/dd/yyyy HH:mm:ss");
         
         
@@ -335,7 +335,9 @@ public class empservice {
             while(rs.next()){
              
                 
+                
                 nxtsql = rs.getString(1);
+                
                 
                 
                
@@ -344,7 +346,11 @@ public class empservice {
             }catch(Exception e){                
                     
             } 
-      
+        
+        if (nxtsql == null){
+        nxtsql ="2015-12-10 16:15:54";    
+        }        
+            
         return nxtsql;
          
      }
@@ -353,14 +359,16 @@ public class empservice {
          
         con = DBConnect.connect();
         ResultSet rs = null;
-        String nxtsql ="0000-00-00 00:00:00";
+        String nxtsql ="2015-12-10 16:15:54";
         
             try {
             ps = con.prepareStatement("SELECT max(submittedDate) from Leaves where branchName = ? ");
             ps.setString(1,Branchname);
             rs = ps.executeQuery();
             while(rs.next()){
+               
                 nxtsql = rs.getString(1);
+                
                
               
             }
@@ -368,6 +376,11 @@ public class empservice {
                     
             } 
       
+        if (nxtsql == null){
+        nxtsql ="2015-12-10 16:15:54";    
+        }    
+            
+            
         return nxtsql;
          
      }
@@ -377,20 +390,23 @@ public class empservice {
          
         con = DBConnect.connect();
         ResultSet rs = null;
-        String nxtsql ="0000-00-00 00:00:00";
+        String nxtsql ="2015-12-10 16:15:54";
             try {
             ps = con.prepareStatement("SELECT max(clockIn) from otTable where branchName = ? ");
             ps.setString(1,Branchname);
             rs = ps.executeQuery();
             while(rs.next()){
+                
                 nxtsql = rs.getString(1);
-               
+                
               
             }
             }catch(Exception e){                
                     
             } 
-      
+        if (nxtsql == null){
+        nxtsql ="2015-12-10 16:15:54";    
+        }        
         return nxtsql;
          
      }
