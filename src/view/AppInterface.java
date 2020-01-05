@@ -836,6 +836,7 @@ public class AppInterface extends javax.swing.JFrame {
         jPanel3.add(addusertable, "addusertable");
 
         addleavetable.setBackground(new java.awt.Color(204, 255, 204));
+        addleavetable.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
 
         tableleave.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
