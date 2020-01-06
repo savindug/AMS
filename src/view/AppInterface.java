@@ -865,8 +865,12 @@ public class AppInterface extends javax.swing.JFrame {
         jLabel50.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel50.setText("Start Date");
 
+        jDatelt1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+
         jLabel51.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel51.setText("End Date");
+
+        jDatelt2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
 
         localltsearch.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         localltsearch.setText("Search");
