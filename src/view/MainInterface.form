@@ -10,7 +10,7 @@
       <Color blue="cc" green="ff" red="cc" type="rgb"/>
     </Property>
     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[1300, 750]"/>
+      <Dimension value="[1700, 1500]"/>
     </Property>
   </Properties>
   <SyntheticProperties>
@@ -32,10 +32,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-          </Group>
+          <Component id="jPanel1" pref="1888" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -75,33 +72,27 @@
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <EmptySpace max="32767" attributes="0"/>
-                                          <Component id="jLabel3" min="-2" pref="116" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="jLabel2" min="-2" pref="117" max="-2" attributes="0"/>
-                                              <Component id="jLabel1" min="-2" pref="85" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="149" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="loginpw" min="-2" pref="423" max="-2" attributes="0"/>
-                                      <Component id="loginun" min="-2" pref="423" max="-2" attributes="0"/>
-                                      <Component id="loginbranch" alignment="0" min="-2" pref="423" max="-2" attributes="0"/>
-                                  </Group>
+                                  <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
+                                  <Component id="loginerror" min="-2" pref="641" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  <Component id="btnlogin" min="-2" pref="423" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
-                                  <Component id="loginerror" min="-2" pref="641" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="jLabel3" min="-2" pref="116" max="-2" attributes="0"/>
+                                              <Component id="jLabel2" min="-2" pref="117" max="-2" attributes="0"/>
+                                              <Component id="jLabel1" min="-2" pref="85" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="149" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="loginpw" min="-2" pref="423" max="-2" attributes="0"/>
+                                              <Component id="loginun" min="-2" pref="423" max="-2" attributes="0"/>
+                                              <Component id="loginbranch" alignment="0" min="-2" pref="423" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Component id="btnlogin" min="-2" pref="423" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                           <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
