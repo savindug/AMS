@@ -251,16 +251,10 @@ public class ServerController {
 
                     Date   dateTime       = format.parse(nxtsql);
                     Date  dateTime1 = format.parse(attL.get(i).getAttTime());
-                   // JOptionPane.showMessageDialog(null,dateTime +"Records Successfully Updated!" + dateTime1);                   
-                    if(dateTime.compareTo(dateTime1) > 0 ){
-
-                    continue;
-                    }
-                    
-
-                 
-
-
+                  // JOptionPane.showMessageDialog(null,dateTime +"Records Successfully Updated!" + dateTime1);                   
+                   if(dateTime.compareTo(dateTime1) > 0 ){
+                        continue;
+                    } 
                     
                     
                     PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL);
