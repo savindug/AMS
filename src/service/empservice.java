@@ -605,7 +605,7 @@ public class empservice {
         return rs;
     }
         
-     public void viewFieldOfficers(int id){
+     public void viewFieldOfficers(int id, String fopath){
          ResultSet myrs = null;
          int result = 0;
          con = DBConnect.connect();
@@ -623,7 +623,7 @@ public class empservice {
                  preparedStatement.setInt(1, id);
                  
                  myrs = preparedStatement.executeQuery();
-                 File thefile = new File("FieldReports\\"+id+"-report.pdf");
+                 File thefile = new File(fopath+"\\"+id+"-report.pdf");
                  output = new FileOutputStream(thefile);
                  
                  if(myrs.next()){
